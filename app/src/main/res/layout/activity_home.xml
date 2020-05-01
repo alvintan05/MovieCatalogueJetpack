@@ -9,20 +9,20 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_home"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        app:title=" "
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:title=" ">
 
         <TextView
-            android:text="@string/toolbar_title"
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="20sp"
+            android:text="@string/toolbar_title"
             android:textColor="@color/colorText"
-            android:typeface="serif"
-            android:layout_height="match_parent"/>
+            android:textSize="20sp"
+            android:typeface="serif" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -30,12 +30,17 @@
         android:id="@+id/tabs_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabMaxWidth="0dp"
         android:background="@color/colorPrimary"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/colorAccent"
         app:tabTextColor="@color/colorText" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager_home"
         android:layout_width="match_parent"
+        android:background="#F1F1F1"
         android:layout_height="match_parent" />
 
 </LinearLayout>

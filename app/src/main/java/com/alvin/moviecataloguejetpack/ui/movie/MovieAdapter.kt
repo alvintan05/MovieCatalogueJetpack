@@ -1,21 +1,25 @@
 package com.alvin.moviecataloguejetpack.ui.movie
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.alvin.moviecataloguejetpack.R
 import com.alvin.moviecataloguejetpack.data.MovieEntity
+import com.alvin.moviecataloguejetpack.ui.detail.DetailMovieActivity
 import kotlinx.android.synthetic.main.item_movie.view.*
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     private val listMovies = ArrayList<MovieEntity>()
+    private var movieType: Int = 0
 
-    fun setMovies(movies: List<MovieEntity>?) {
+    fun setMovies(movies: List<MovieEntity>?, type: Int) {
         if (movies == null) return
         listMovies.clear()
         listMovies.addAll(movies)
+        movieType = type
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,6 +41,14 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
                 tv_item_rating.text = movie.rating.toString()
                 tv_item_desc.text = movie.overview
                 img_item_poster.setImageResource(movie.posterPath)
+
+                ticket_view.setOnClickListener{
+                    val intent = Intent(context, DetailMovieActivity::class.java).apply {
+                        putExtra(DetailMovieActivity.EXTRA_ID, movie.movieId)
+                        putExtra(DetailMovieActivity.EXTRA_TYPE, movieType)
+                    }
+                    context.startActivity(intent)
+                }
             }
         }
 

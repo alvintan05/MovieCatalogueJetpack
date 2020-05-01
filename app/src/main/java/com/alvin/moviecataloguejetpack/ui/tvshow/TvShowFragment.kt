@@ -37,7 +37,7 @@ class TvShowFragment : Fragment() {
             val shows = viewModel.getTvShows()
 
             val adapter = MovieAdapter()
-            adapter.setMovies(shows)
+            adapter.setMovies(shows, 2)
 
             with(rv_tv_shows) {
                 layoutManager = LinearLayoutManager(context)

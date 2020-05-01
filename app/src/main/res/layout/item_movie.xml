@@ -10,7 +10,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <com.vipulasri.ticketview.TicketView
-        android:id="@+id/ticketView"
+        android:id="@+id/ticket_view"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_marginTop="60dp"
@@ -20,8 +20,6 @@
         app:ticketDividerPadding="0dp"
         app:ticketDividerType="dash"
         app:ticketElevation="14dp"
-        app:ticketBorderColor="@android:color/black"
-        app:ticketBorderWidth="2dp"
         app:ticketOrientation="vertical"
         app:ticketScallopPositionPercent="40"
         app:ticketScallopRadius="7dp"
@@ -39,10 +37,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@id/ticketView"
+        app:layout_constraintBottom_toBottomOf="@id/ticket_view"
         app:layout_constraintEnd_toEndOf="@id/guideline"
         android:paddingStart="5dp"
-        app:layout_constraintStart_toStartOf="@id/ticketView"
+        app:layout_constraintStart_toStartOf="@id/ticket_view"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -62,10 +60,10 @@
         android:orientation="vertical"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/ticketView"
-        app:layout_constraintEnd_toEndOf="@id/ticketView"
+        app:layout_constraintBottom_toBottomOf="@id/ticket_view"
+        app:layout_constraintEnd_toEndOf="@id/ticket_view"
         app:layout_constraintStart_toEndOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="@id/ticketView">
+        app:layout_constraintTop_toTopOf="@id/ticket_view">
 
         <TextView
             android:id="@+id/tv_item_title"

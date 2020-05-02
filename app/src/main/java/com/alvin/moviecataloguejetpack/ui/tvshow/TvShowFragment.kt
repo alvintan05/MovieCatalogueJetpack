@@ -1,13 +1,12 @@
 package com.alvin.moviecataloguejetpack.ui.tvshow
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.alvin.moviecataloguejetpack.R
 import com.alvin.moviecataloguejetpack.ui.movie.MovieAdapter
 import kotlinx.android.synthetic.main.fragment_tv_show.*

@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def API_KEY = '"' + apiKey + '"' ?: '"Api key not found"'
+def BASE_URL = '"' + baseUrl + '"' ?: '"Base URL not found"'
+def IMAGE_BASE_URL = '"' + imageBaseURL + '"' ?: '"Image Base URL not found"'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -14,6 +18,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        each { type ->
+            type.buildConfigField "String", "BASE_URL", BASE_URL
+            type.buildConfigField "String", "TMDB_API_KEY", API_KEY
+            type.buildConfigField "String", "IMAGE_BASE_URL", IMAGE_BASE_URL
+        }
     }
 
     buildTypes {
@@ -21,6 +31,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
 }
@@ -42,6 +61,10 @@ dependencies {
 
     //architecture component
     implementation "androidx.lifecycle:lifecycle-viewmodel:$archLifecycleVersion"
+
+    //networking
+    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
 
     //testing
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

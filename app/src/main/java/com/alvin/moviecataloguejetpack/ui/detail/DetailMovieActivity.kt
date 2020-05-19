@@ -1,11 +1,17 @@
 package com.alvin.moviecataloguejetpack.ui.detail
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.alvin.moviecataloguejetpack.BuildConfig
 import com.alvin.moviecataloguejetpack.R
-import com.alvin.moviecataloguejetpack.data.MovieEntity
+import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
+import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity
+import com.alvin.moviecataloguejetpack.utils.Url
+import com.alvin.moviecataloguejetpack.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_detail_movie.*
@@ -28,10 +34,13 @@ class DetailMovieActivity : AppCompatActivity() {
             setExpandedTitleColor(ContextCompat.getColor(context, android.R.color.transparent))
         }
 
+        val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(
             this,
-            ViewModelProvider.NewInstanceFactory()
+            factory
         )[DetailMovieViewModel::class.java]
+
+        progress_bar.visibility = View.VISIBLE
 
         val extras = intent.extras
         if (extras != null) {
@@ -39,13 +48,15 @@ class DetailMovieActivity : AppCompatActivity() {
             val type = extras.getInt(EXTRA_TYPE, 0)
             if (movieId != 0 && type != 0) {
                 viewModel.setSelectedMovie(movieId)
-                setDetailMovie(viewModel.getSelectedMovieDetail(type))
+                viewModel.getSelectedMovieDetail(BuildConfig.TMDB_API_KEY, type)
+                    .observe(this, Observer { setDetailMovie(it) })
             }
 
         }
     }
 
-    private fun setDetailMovie(movie: MovieEntity) {
+    private fun setDetailMovie(movie: DetailMovieEntity) {
+        progress_bar.visibility = View.GONE
         collapse_toolbar_detail.title = movie.title
         tv_detail_title.text = movie.title
         tv_detail_date.text = resources.getString(R.string.release_time, movie.releaseDate)
@@ -53,10 +64,17 @@ class DetailMovieActivity : AppCompatActivity() {
         tv_detail_category.text = movie.category
         tv_detail_synopsis.text = movie.overview
         tv_detail_rating.text = movie.rating.toString()
-        img_detail_poster.setImageResource(movie.posterPath)
 
         Glide.with(this)
-            .load(movie.backdropPath)
+            .load(Url.getUrlPoster(movie.posterPath))
+            .apply(
+                RequestOptions.placeholderOf(R.color.colorTextSecondary)
+                    .error(R.color.colorTextSecondary)
+            )
+            .into(img_detail_poster)
+
+        Glide.with(this)
+            .load(Url.getUrlBackdrop(movie.backdropPath))
             .apply(
                 RequestOptions.placeholderOf(R.color.colorTextSecondary)
                     .error(R.color.colorTextSecondary)

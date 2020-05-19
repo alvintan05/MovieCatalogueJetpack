@@ -1,10 +1,11 @@
 package com.alvin.moviecataloguejetpack.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.alvin.moviecataloguejetpack.data.MovieEntity
-import com.alvin.moviecataloguejetpack.utils.DataDummy
+import com.alvin.moviecataloguejetpack.data.source.MovieRepository
+import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
 
-class DetailMovieViewModel : ViewModel() {
+class DetailMovieViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
     private var movieId: Int = 0
 
@@ -12,18 +13,11 @@ class DetailMovieViewModel : ViewModel() {
         this.movieId = movieId
     }
 
-    fun getSelectedMovieDetail(type: Int): MovieEntity {
-        lateinit var movie: MovieEntity
-        lateinit var movieEntities: List<MovieEntity>
+    fun getSelectedMovieDetail(apiKey: String, type: Int): LiveData<DetailMovieEntity> {
+        lateinit var movie: LiveData<DetailMovieEntity>
         when (type) {
-            1 -> movieEntities = DataDummy.generateDummyMovies()
-            2 -> movieEntities = DataDummy.generateDummyTvShows()
-        }
-
-        for (movieEntity in movieEntities) {
-            if (movieEntity.movieId == movieId) {
-                movie = movieEntity
-            }
+            1 -> movie = movieRepository.getDetailMovie(movieId, apiKey)
+            2 -> movie = movieRepository.getDetailTvShow(movieId, apiKey)
         }
 
         return movie

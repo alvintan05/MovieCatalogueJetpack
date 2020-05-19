@@ -1,6 +1,6 @@
-package com.alvin.moviecataloguejetpack.data
+package com.alvin.moviecataloguejetpack.data.source.local
 
-data class MovieEntity(
+data class DetailMovieEntity(
     var movieId: Int,
     var title: String,
     var releaseDate: String,
@@ -8,6 +8,6 @@ data class MovieEntity(
     var rating: Double,
     var category: String,
     var overview: String,
-    var posterPath: Int,
+    var posterPath: String,
     var backdropPath: String
 )

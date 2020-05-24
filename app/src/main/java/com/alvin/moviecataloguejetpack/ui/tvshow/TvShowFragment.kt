@@ -8,9 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alvin.moviecataloguejetpack.BuildConfig
 import com.alvin.moviecataloguejetpack.R
-import com.alvin.moviecataloguejetpack.data.source.remote.network.RetrofitServer
 import com.alvin.moviecataloguejetpack.ui.movie.MovieAdapter
 import com.alvin.moviecataloguejetpack.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_tv_show.*
@@ -19,6 +17,8 @@ import kotlinx.android.synthetic.main.fragment_tv_show.*
  * A simple [Fragment] subclass.
  */
 class TvShowFragment : Fragment() {
+
+    private lateinit var viewModel: TvShowViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,18 +33,21 @@ class TvShowFragment : Fragment() {
         if (activity != null) {
 
             val factory = ViewModelFactory.getInstance()
-            val viewModel = ViewModelProvider(
-                this,
+            viewModel = ViewModelProvider(
+                requireActivity(),
                 factory
             )[TvShowViewModel::class.java]
 
             val adapter = MovieAdapter()
 
             progress_bar.visibility = View.VISIBLE
-            viewModel.getTvShows(BuildConfig.TMDB_API_KEY, 1).observe(this, Observer { shows ->
-                progress_bar.visibility = View.GONE
-                adapter.setMovies(shows, 2)
-                adapter.notifyDataSetChanged()
+
+            viewModel.data.observe(viewLifecycleOwner, Observer { shows ->
+                if (shows != null) {
+                    progress_bar.visibility = View.GONE
+                    adapter.setMovies(shows, 2)
+                    adapter.notifyDataSetChanged()
+                }
             })
 
             with(rv_tv_shows) {

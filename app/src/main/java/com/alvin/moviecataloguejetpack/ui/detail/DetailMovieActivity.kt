@@ -48,8 +48,7 @@ class DetailMovieActivity : AppCompatActivity() {
             val type = extras.getInt(EXTRA_TYPE, 0)
             if (movieId != 0 && type != 0) {
                 viewModel.setSelectedMovie(movieId)
-                viewModel.getSelectedMovieDetail(BuildConfig.TMDB_API_KEY, type)
-                    .observe(this, Observer { setDetailMovie(it) })
+                viewModel.getSelectedMovieDetail(type).observe(this, Observer { setDetailMovie(it) })
             }
 
         }

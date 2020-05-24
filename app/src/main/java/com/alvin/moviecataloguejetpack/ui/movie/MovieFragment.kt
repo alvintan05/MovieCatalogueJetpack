@@ -42,7 +42,7 @@ class MovieFragment : Fragment() {
             val adapter = MovieAdapter()
             progress_bar.visibility = View.VISIBLE
 
-            viewModel.getMovies(BuildConfig.TMDB_API_KEY, 1).observe(this, Observer { movies ->
+            viewModel.data.observe(viewLifecycleOwner, Observer { movies ->
                 progress_bar.visibility = View.GONE
                 adapter.setMovies(movies, 1)
                 adapter.notifyDataSetChanged()

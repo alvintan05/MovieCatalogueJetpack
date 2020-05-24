@@ -23,9 +23,9 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
             }
     }
 
-    override fun getMovies(apiKey: String, page: Int): LiveData<List<MovieEntity>> {
+    override fun getMovies(page: Int): LiveData<List<MovieEntity>> {
         val movieResults = MutableLiveData<List<MovieEntity>>()
-        remoteDataSource.getMovies(apiKey, page, object : RemoteDataSource.LoadMoviesCallback {
+        remoteDataSource.getMovies(page, object : RemoteDataSource.LoadMoviesCallback {
             override fun onAllMoviesReceived(movieResponses: List<Movie>) {
                 val movieList = ArrayList<MovieEntity>()
                 for (response in movieResponses) {
@@ -45,9 +45,9 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         return movieResults
     }
 
-    override fun getTvShows(apiKey: String, page: Int): LiveData<List<MovieEntity>> {
+    override fun getTvShows(page: Int): LiveData<List<MovieEntity>> {
         val tvShowResults = MutableLiveData<List<MovieEntity>>()
-        remoteDataSource.getTvShows(apiKey, page, object : RemoteDataSource.LoadTvShowsCallback {
+        remoteDataSource.getTvShows(page, object : RemoteDataSource.LoadTvShowsCallback {
             override fun onAllTvShowsReceived(tvShowResponses: List<TvShow>) {
                 val tvShowList = ArrayList<MovieEntity>()
                 for (response in tvShowResponses) {
@@ -67,10 +67,10 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         return tvShowResults
     }
 
-    override fun getDetailMovie(movieId: Int, apiKey: String): LiveData<DetailMovieEntity> {
+    override fun getDetailMovie(movieId: Int): LiveData<DetailMovieEntity> {
         val detailResult = MutableLiveData<DetailMovieEntity>()
 
-        remoteDataSource.getDetailMovie(movieId, apiKey,
+        remoteDataSource.getDetailMovie(movieId,
             object : RemoteDataSource.LoadDetailMovieCallback {
                 override fun onDetailMovieReceived(detailMovie: DetailMovieResponse) {
                     val movie = DetailMovieEntity(
@@ -93,10 +93,10 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         return detailResult
     }
 
-    override fun getDetailTvShow(tvId: Int, apiKey: String): LiveData<DetailMovieEntity> {
+    override fun getDetailTvShow(tvId: Int): LiveData<DetailMovieEntity> {
         val detailResult = MutableLiveData<DetailMovieEntity>()
 
-        remoteDataSource.getDetailTvShow(tvId, apiKey,
+        remoteDataSource.getDetailTvShow(tvId,
             object : RemoteDataSource.LoadDetailTvShowCallback {
                 override fun onDetailTvShowReceived(detailTvShow: DetailTvShowResponse) {
                     val tvShow = DetailMovieEntity(

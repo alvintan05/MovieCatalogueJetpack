@@ -13,14 +13,21 @@ class DetailMovieViewModel(private val movieRepository: MovieRepository) : ViewM
         this.movieId = movieId
     }
 
-    fun getSelectedMovieDetail(apiKey: String, type: Int): LiveData<DetailMovieEntity> {
+    fun getSelectedMovieDetail(type: Int): LiveData<DetailMovieEntity> {
         lateinit var movie: LiveData<DetailMovieEntity>
         when (type) {
-            1 -> movie = movieRepository.getDetailMovie(movieId, apiKey)
-            2 -> movie = movieRepository.getDetailTvShow(movieId, apiKey)
+            1 -> movie = dataMovie
+            2 -> movie = dataTvSHow
         }
-
         return movie
+    }
+
+    private val dataMovie: LiveData<DetailMovieEntity> by lazy {
+        movieRepository.getDetailMovie(movieId)
+    }
+
+    private val dataTvSHow: LiveData<DetailMovieEntity> by lazy {
+        movieRepository.getDetailTvShow(movieId)
     }
 
 }

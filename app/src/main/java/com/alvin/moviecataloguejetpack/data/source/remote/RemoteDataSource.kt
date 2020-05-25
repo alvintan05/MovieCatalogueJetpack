@@ -3,6 +3,7 @@ package com.alvin.moviecataloguejetpack.data.source.remote
 import com.alvin.moviecataloguejetpack.BuildConfig
 import com.alvin.moviecataloguejetpack.data.source.remote.network.RetrofitServer
 import com.alvin.moviecataloguejetpack.data.source.remote.response.*
+import com.alvin.moviecataloguejetpack.utils.EspressoIdlingResource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,11 +21,11 @@ class RemoteDataSource {
     }
 
     fun getMovies(page:Int, callback: LoadMoviesCallback) {
-
+        EspressoIdlingResource.increment()
         RetrofitServer.getService().getMovies(BuildConfig.TMDB_API_KEY, page)
             .enqueue(object : Callback<MoviesResponse> {
                 override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
-                    TODO("Not yet implemented")
+
                 }
 
                 override fun onResponse(
@@ -32,13 +33,14 @@ class RemoteDataSource {
                     response: Response<MoviesResponse>
                 ) {
                     response.body()?.results?.let { callback.onAllMoviesReceived(it) }
+                    EspressoIdlingResource.decrement()
                 }
 
             })
     }
 
     fun getTvShows(page: Int, callback: LoadTvShowsCallback) {
-
+        EspressoIdlingResource.increment()
         RetrofitServer.getService().getTvShows(BuildConfig.TMDB_API_KEY, page)
             .enqueue(object : Callback<TvShowsResponse> {
                 override fun onFailure(call: Call<TvShowsResponse>, t: Throwable) {
@@ -50,17 +52,18 @@ class RemoteDataSource {
                     response: Response<TvShowsResponse>
                 ) {
                     response.body()?.results?.let { callback.onAllTvShowsReceived(it) }
+                    EspressoIdlingResource.decrement()
                 }
 
             })
     }
 
     fun getDetailMovie(movieId: Int,callback: LoadDetailMovieCallback) {
-
+        EspressoIdlingResource.increment()
         RetrofitServer.getService().getMovieDetail(movieId, BuildConfig.TMDB_API_KEY)
             .enqueue(object : Callback<DetailMovieResponse> {
                 override fun onFailure(call: Call<DetailMovieResponse>, t: Throwable) {
-                    TODO("Not yet implemented")
+
                 }
 
                 override fun onResponse(
@@ -68,6 +71,7 @@ class RemoteDataSource {
                     response: Response<DetailMovieResponse>
                 ) {
                     response.body()?.let { callback.onDetailMovieReceived(it) }
+                    EspressoIdlingResource.decrement()
                 }
 
             })
@@ -75,11 +79,11 @@ class RemoteDataSource {
     }
 
     fun getDetailTvShow(tvId: Int, callback: LoadDetailTvShowCallback) {
-
+        EspressoIdlingResource.increment()
         RetrofitServer.getService().getTvShowDetail(tvId, BuildConfig.TMDB_API_KEY)
             .enqueue(object : Callback<DetailTvShowResponse> {
                 override fun onFailure(call: Call<DetailTvShowResponse>, t: Throwable) {
-                    TODO("Not yet implemented")
+
                 }
 
                 override fun onResponse(
@@ -87,6 +91,7 @@ class RemoteDataSource {
                     response: Response<DetailTvShowResponse>
                 ) {
                     response.body()?.let { callback.onDetailTvShowReceived(it) }
+                    EspressoIdlingResource.decrement()
                 }
 
             })

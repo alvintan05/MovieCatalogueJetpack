@@ -1,10 +1,11 @@
 package com.alvin.moviecataloguejetpack.ui.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.alvin.moviecataloguejetpack.data.source.MovieRepository
 import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity
-import com.alvin.moviecataloguejetpack.data.source.remote.network.ApiRequest
+import com.alvin.moviecataloguejetpack.utils.DataDummy
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -28,9 +29,6 @@ class MovieViewModelTest {
     private lateinit var movieRepository: MovieRepository
 
     @Mock
-    private lateinit var apiRequest: ApiRequest
-
-    @Mock
     private lateinit var observer: Observer<List<MovieEntity>>
 
     @Before
@@ -40,14 +38,17 @@ class MovieViewModelTest {
 
     @Test
     fun getMovies() {
+        val dummyMovies = DataDummy.generateDummyMovies(1)
+        val response = MutableLiveData<List<MovieEntity>>()
+        response.value = dummyMovies
 
-        `when`(movieRepository.getMovies(1)).thenReturn()
-        val movieEntities = viewModel
+        `when`(movieRepository.getMovies(1)).thenReturn(response)
+        val movieEntities = viewModel.data.value
         verify(movieRepository).getMovies(1)
         assertNotNull(movieEntities)
-        assertEquals(19, movieEntities.size)
+        assertEquals(dummyMovies.size, movieEntities?.size)
 
         viewModel.data.observeForever(observer)
-        verify(observer).onChanged()
+        verify(observer).onChanged(dummyMovies)
     }
 }

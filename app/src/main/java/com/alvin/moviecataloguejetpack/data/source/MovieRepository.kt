@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
 import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity
 import com.alvin.moviecataloguejetpack.data.source.remote.RemoteDataSource
-import com.alvin.moviecataloguejetpack.data.source.remote.response.DetailMovieResponse
-import com.alvin.moviecataloguejetpack.data.source.remote.response.DetailTvShowResponse
-import com.alvin.moviecataloguejetpack.data.source.remote.response.Movie
-import com.alvin.moviecataloguejetpack.data.source.remote.response.TvShow
+import com.alvin.moviecataloguejetpack.data.source.remote.response.*
 
 class MovieRepository private constructor(private val remoteDataSource: RemoteDataSource) :
     MovieDataSource {
@@ -79,7 +76,9 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
                         detailMovie.releaseDate,
                         detailMovie.runtime,
                         detailMovie.rating,
-                        detailMovie.genres[0].name,
+                        detailMovie.genres.joinToString(", ", "", ".", 3, "etc") {
+                            it.name
+                        },
                         detailMovie.overview,
                         detailMovie.posterPath,
                         detailMovie.backdropPath
@@ -103,9 +102,11 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
                         detailTvShow.id,
                         detailTvShow.title,
                         detailTvShow.releaseDate,
-                        detailTvShow.episodeRunTime[0],
+                        detailTvShow.episodeRunTime.average().toInt(),
                         detailTvShow.rating,
-                        detailTvShow.genres[0].name,
+                        detailTvShow.genres.joinToString(", ", "", ".", 3, "etc") {
+                            it.name
+                        },
                         detailTvShow.overview,
                         detailTvShow.posterPath,
                         detailTvShow.backdropPath

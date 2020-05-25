@@ -22,11 +22,11 @@ class DetailMovieViewModel(private val movieRepository: MovieRepository) : ViewM
         return movie
     }
 
-    private val dataMovie: LiveData<DetailMovieEntity> by lazy {
+    val dataMovie: LiveData<DetailMovieEntity> by lazy {
         movieRepository.getDetailMovie(movieId)
     }
 
-    private val dataTvSHow: LiveData<DetailMovieEntity> by lazy {
+    val dataTvSHow: LiveData<DetailMovieEntity> by lazy {
         movieRepository.getDetailTvShow(movieId)
     }
 

@@ -9,13 +9,13 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class TvShow(
 
-    @SerializedName("name")
-    @Expose
-    val name: String,
-
     @SerializedName("id")
     @Expose
     val id: Int,
+
+    @SerializedName("name")
+    @Expose
+    val name: String,
 
     @SerializedName("vote_average")
     @Expose

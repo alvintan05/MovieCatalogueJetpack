@@ -8,10 +8,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Movie(
 
-    @SerializedName("poster_path")
-    @Expose
-    val posterPath: String,
-
     @SerializedName("id")
     @Expose
     val id: Int,
@@ -26,5 +22,9 @@ data class Movie(
 
     @SerializedName("overview")
     @Expose
-    val overview: String
+    val overview: String,
+
+    @SerializedName("poster_path")
+    @Expose
+    val posterPath: String
 ) : Parcelable

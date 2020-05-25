@@ -79,4 +79,13 @@ class HomeActivityTest {
         onView(withId(R.id.img_detail_poster)).check(matches(isDisplayed()))
         onView(withId(R.id.img_detail_backdrop)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun swipeLeftRightTab() {
+        onView(withId(R.id.view_pager_home)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_movies)).check(matches(isDisplayed()))
+        onView(withId(R.id.view_pager_home)).perform(swipeLeft())
+        onView(withId(R.id.rv_tv_shows)).check(matches(isDisplayed()))
+        onView(withId(R.id.view_pager_home)).perform(swipeRight())
+    }
 }

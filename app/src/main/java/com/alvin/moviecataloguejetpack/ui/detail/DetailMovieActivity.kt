@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.alvin.moviecataloguejetpack.BuildConfig
 import com.alvin.moviecataloguejetpack.R
 import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
-import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity
 import com.alvin.moviecataloguejetpack.utils.Url
 import com.alvin.moviecataloguejetpack.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide

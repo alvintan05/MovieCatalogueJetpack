@@ -40,7 +40,7 @@ object DataDummy {
             )
         )
 
-        val data = DetailMovieResponse(
+        return DetailMovieResponse(
             419704,
             "Ad Astra",
             "2019-09-17",
@@ -51,8 +51,6 @@ object DataDummy {
             "/zG2l9Svw4PTldWJAzC171Y3d6G8.jpg",
             "/5BwqwxMEjeFtdknRV792Svo0K1v.jpg"
         )
-
-        return data
     }
 
     fun generateRemoteDummyTvShows(page: Int): List<TvShow> {
@@ -90,7 +88,7 @@ object DataDummy {
 
         val runtime = listOf(44)
 
-        val detail = DetailTvShowResponse(
+        return DetailTvShowResponse(
             60735,
             "The Flash",
             "2014-10-07",
@@ -101,8 +99,6 @@ object DataDummy {
             "/wHa6KOJAoNTFLFtp7wguUJKSnju.jpg",
             "/jC1KqsFx8ZyqJyQa2Ohi7xgL7XC.jpg"
         )
-
-        return detail
     }
 
     fun generateDummyMovies(page: Int): List<MovieEntity> {

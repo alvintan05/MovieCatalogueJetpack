@@ -1,7 +1,6 @@
 package com.alvin.moviecataloguejetpack.ui.movie
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.alvin.moviecataloguejetpack.data.source.MovieRepository
 import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity

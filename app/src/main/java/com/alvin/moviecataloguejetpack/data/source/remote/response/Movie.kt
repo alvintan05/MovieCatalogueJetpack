@@ -10,21 +10,21 @@ data class Movie(
 
     @SerializedName("id")
     @Expose
-    val id: Int,
+    val id: Int?,
 
     @SerializedName("title")
     @Expose
-    val title: String,
+    val title: String?,
 
     @SerializedName("vote_average")
     @Expose
-    val voteAverage: Double,
+    val voteAverage: Double?,
 
     @SerializedName("overview")
     @Expose
-    val overview: String,
+    val overview: String?,
 
     @SerializedName("poster_path")
     @Expose
-    val posterPath: String
+    val posterPath: String?
 ) : Parcelable

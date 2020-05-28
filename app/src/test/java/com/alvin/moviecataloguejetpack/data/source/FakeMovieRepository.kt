@@ -69,7 +69,9 @@ class FakeMovieRepository(private val remoteDataSource: RemoteDataSource) :
                         detailMovie.releaseDate,
                         detailMovie.runtime,
                         detailMovie.rating,
-                        detailMovie.genres[0].name,
+                        detailMovie.genres?.joinToString(", ", "", ".", 3, "etc") {
+                            it.name.toString()
+                        },
                         detailMovie.overview,
                         detailMovie.posterPath,
                         detailMovie.backdropPath
@@ -93,9 +95,11 @@ class FakeMovieRepository(private val remoteDataSource: RemoteDataSource) :
                         detailTvShow.id,
                         detailTvShow.title,
                         detailTvShow.releaseDate,
-                        detailTvShow.episodeRunTime[0],
+                        detailTvShow.episodeRunTime?.average()?.toInt(),
                         detailTvShow.rating,
-                        detailTvShow.genres[0].name,
+                        detailTvShow.genres?.joinToString(", ", "", ".", 3, "etc") {
+                            it.name.toString()
+                        },
                         detailTvShow.overview,
                         detailTvShow.posterPath,
                         detailTvShow.backdropPath

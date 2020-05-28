@@ -63,7 +63,7 @@ class DetailMovieActivity : AppCompatActivity() {
         tv_detail_rating.text = movie.rating.toString()
 
         Glide.with(this)
-            .load(Url.getUrlPoster(movie.posterPath))
+            .load(movie.posterPath?.let { Url.getUrlPoster(it) })
             .apply(
                 RequestOptions.placeholderOf(R.color.colorTextSecondary)
                     .error(R.color.colorTextSecondary)
@@ -71,7 +71,7 @@ class DetailMovieActivity : AppCompatActivity() {
             .into(img_detail_poster)
 
         Glide.with(this)
-            .load(Url.getUrlBackdrop(movie.backdropPath))
+            .load(movie.backdropPath?.let { Url.getUrlBackdrop(it) })
             .apply(
                 RequestOptions.placeholderOf(R.color.colorTextSecondary)
                     .error(R.color.colorTextSecondary)

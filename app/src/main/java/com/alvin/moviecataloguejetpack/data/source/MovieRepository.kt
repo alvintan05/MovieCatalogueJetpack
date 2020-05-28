@@ -5,7 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
 import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity
 import com.alvin.moviecataloguejetpack.data.source.remote.RemoteDataSource
-import com.alvin.moviecataloguejetpack.data.source.remote.response.*
+import com.alvin.moviecataloguejetpack.data.source.remote.response.DetailMovieResponse
+import com.alvin.moviecataloguejetpack.data.source.remote.response.DetailTvShowResponse
+import com.alvin.moviecataloguejetpack.data.source.remote.response.Movie
+import com.alvin.moviecataloguejetpack.data.source.remote.response.TvShow
 
 class MovieRepository private constructor(private val remoteDataSource: RemoteDataSource) :
     MovieDataSource {
@@ -76,8 +79,8 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
                         detailMovie.releaseDate,
                         detailMovie.runtime,
                         detailMovie.rating,
-                        detailMovie.genres.joinToString(", ", "", ".", 3, "etc") {
-                            it.name
+                        detailMovie.genres?.joinToString(", ", "", ".", 3, "etc") {
+                            it.name.toString()
                         },
                         detailMovie.overview,
                         detailMovie.posterPath,
@@ -102,10 +105,10 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
                         detailTvShow.id,
                         detailTvShow.title,
                         detailTvShow.releaseDate,
-                        detailTvShow.episodeRunTime.average().toInt(),
+                        detailTvShow.episodeRunTime?.average()?.toInt(),
                         detailTvShow.rating,
-                        detailTvShow.genres.joinToString(", ", "", ".", 3, "etc") {
-                            it.name
+                        detailTvShow.genres?.joinToString(", ", "", ".", 3, "etc") {
+                            it.name.toString()
                         },
                         detailTvShow.overview,
                         detailTvShow.posterPath,

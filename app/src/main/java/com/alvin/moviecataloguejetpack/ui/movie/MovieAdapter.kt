@@ -44,7 +44,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
                 tv_item_desc.text = movie.overview
 
                 Glide.with(itemView.context)
-                    .load(Url.getUrlPoster(movie.posterPath))
+                    .load(movie.posterPath?.let { Url.getUrlPoster(it) })
                     .into(img_item_poster)
 
                 ticket_view.setOnClickListener {

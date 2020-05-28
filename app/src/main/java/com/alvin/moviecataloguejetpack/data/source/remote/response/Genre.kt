@@ -9,9 +9,9 @@ import kotlinx.android.parcel.Parcelize
 data class Genre(
     @SerializedName("id")
     @Expose
-    var id: Int,
+    var id: Int?,
 
     @SerializedName("name")
     @Expose
-    var name: String
+    var name: String?
 ) : Parcelable

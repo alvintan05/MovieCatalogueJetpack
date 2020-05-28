@@ -7,37 +7,37 @@ data class DetailTvShowResponse(
 
     @SerializedName("id")
     @Expose
-    var id: Int,
+    var id: Int?,
 
     @SerializedName("name")
     @Expose
-    var title: String,
+    var title: String?,
 
     @SerializedName("first_air_date")
     @Expose
-    var releaseDate: String,
+    var releaseDate: String?,
 
     @SerializedName("episode_run_time")
     @Expose
-    var episodeRunTime: List<Int>,
+    var episodeRunTime: List<Int>?,
 
     @SerializedName("vote_average")
     @Expose
-    var rating: Double,
+    var rating: Double?,
 
     @SerializedName("genres")
     @Expose
-    var genres: List<Genre>,
+    var genres: List<Genre>?,
 
     @SerializedName("overview")
     @Expose
-    var overview: String,
+    var overview: String?,
 
     @SerializedName("poster_path")
     @Expose
-    var posterPath: String,
+    var posterPath: String?,
 
     @SerializedName("backdrop_path")
     @Expose
-    var backdropPath: String
+    var backdropPath: String?
 )

@@ -26,8 +26,8 @@ class MovieRepositoryTest {
 
     private val movieResponses = DataDummy.generateRemoteDummyMovies(page)
     private val tvShowResponses = DataDummy.generateRemoteDummyTvShows(page)
-    private val movieId = movieResponses[0].id
-    private val tvId = tvShowResponses[0].id
+    private val movieId = movieResponses[0].id!!
+    private val tvId = tvShowResponses[0].id!!
     private val movieDetail = DataDummy.generateRemoteDummyMovieDetail(movieId)
     private val tvShowDetail = DataDummy.generateRemoteDummyTvShowDetail(tvId)
 

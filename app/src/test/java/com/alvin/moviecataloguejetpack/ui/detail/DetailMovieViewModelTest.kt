@@ -23,8 +23,8 @@ class DetailMovieViewModelTest {
     private lateinit var movieViewModel: DetailMovieViewModel
     private lateinit var tvShowViewModel: DetailMovieViewModel
 
-    private val movieId = DataDummy.generateDummyMovies(1)[0].movieId
-    private val tvId = DataDummy.generateDummyTvShows(1)[0].movieId
+    private val movieId = DataDummy.generateDummyMovies(1)[0].movieId!!
+    private val tvId = DataDummy.generateDummyTvShows(1)[0].movieId!!
 
     private val dummyMovie = DataDummy.generateDummyMovieDetail(movieId)
     private val dummyTvShow = DataDummy.generateDummyTvShowDetail(tvId)
@@ -68,7 +68,7 @@ class DetailMovieViewModelTest {
         assertEquals(dummyMovie.category, movieEntity.category)
         assertEquals(dummyMovie.overview, movieEntity.overview)
         assertEquals(dummyMovie.posterPath, movieEntity.posterPath)
-        assertEquals(dummyMovie.rating, movieEntity.rating, 0.0001)
+        assertEquals(dummyMovie.rating!!, movieEntity.rating!!, 0.0001)
         assertEquals(dummyMovie.title, movieEntity.title)
 
         movieViewModel.dataMovie.observeForever(movieObserver)
@@ -92,7 +92,7 @@ class DetailMovieViewModelTest {
         assertEquals(dummyTvShow.category, tvShowEntity.category)
         assertEquals(dummyTvShow.overview, tvShowEntity.overview)
         assertEquals(dummyTvShow.posterPath, tvShowEntity.posterPath)
-        assertEquals(dummyTvShow.rating, tvShowEntity.rating, 0.0001)
+        assertEquals(dummyTvShow.rating!!, tvShowEntity.rating!!, 0.0001)
         assertEquals(dummyTvShow.title, tvShowEntity.title)
 
         tvShowViewModel.dataTvSHow.observeForever(tvShowObserver)

@@ -1,46 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.home.HomeActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_home"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
-        app:title=" ">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/toolbar_title"
-            android:textColor="@color/colorText"
-            android:textSize="20sp"
-            android:typeface="serif" />
+        app:title="Movie"
+        app:titleTextColor="@android:color/white">
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs_home"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMaxWidth="0dp"
-        android:background="@color/colorPrimary"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/colorAccent"
-        app:tabTextColor="@color/colorText" />
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        app:menu="@menu/menu_bottom_home" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager_home"
+    <fragment
+        android:id="@+id/fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:background="#F1F1F1"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_nav_home"
+        android:layout_below="@+id/toolbar_home"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/home_nav" />
 
-</LinearLayout>
+</RelativeLayout>

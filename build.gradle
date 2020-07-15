@@ -46,4 +46,6 @@ ext {
 
     archLifecycleTestingVersion = '2.1.0'
     archLifecycleVersion = '2.2.0'
+
+    nav_version = "2.3.0-rc01"
 }

@@ -22,9 +22,9 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
-                android:background="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@android:color/white"
                 app:layout_collapseMode="parallax">
 
                 <ImageView
@@ -124,6 +124,23 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:navigationIcon="@drawable/ic_navigate_back"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ToggleButton
+                    android:id="@+id/btn_fav"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/favorite_selector"
+                    android:textOff=""
+                    android:textOn="" />
+
+            </RelativeLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

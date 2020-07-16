@@ -1,13 +1,16 @@
 package com.alvin.moviecataloguejetpack.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alvin.moviecataloguejetpack.R
 import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
+import com.alvin.moviecataloguejetpack.data.source.local.entity.FavoriteEntity
 import com.alvin.moviecataloguejetpack.utils.Url
 import com.alvin.moviecataloguejetpack.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
@@ -21,6 +24,11 @@ class DetailMovieActivity : AppCompatActivity() {
         const val EXTRA_TYPE = "extra_type"
     }
 
+    private var movieEntity: DetailMovieEntity? = null
+    private var type = 1
+    private var movieId = 1
+    private var favoriteEntity = FavoriteEntity()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
@@ -32,7 +40,7 @@ class DetailMovieActivity : AppCompatActivity() {
             setExpandedTitleColor(ContextCompat.getColor(context, android.R.color.transparent))
         }
 
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(
             this,
             factory
@@ -42,13 +50,71 @@ class DetailMovieActivity : AppCompatActivity() {
 
         val extras = intent.extras
         if (extras != null) {
-            val movieId = extras.getInt(EXTRA_ID, 0)
-            val type = extras.getInt(EXTRA_TYPE, 0)
+            movieId = extras.getInt(EXTRA_ID, 0)
+            type = extras.getInt(EXTRA_TYPE, 0)
             if (movieId != 0 && type != 0) {
                 viewModel.setSelectedMovie(movieId)
-                viewModel.getSelectedMovieDetail(type).observe(this, Observer { setDetailMovie(it) })
+                viewModel.setType(type)
+
+                viewModel.isFavorite.observe(this, Observer { status ->
+                    btn_fav.isChecked = status
+                    viewModel.getSelectedMovieDetail()
+                        .observe(this, Observer {
+                            movieEntity = it
+                            setDetailMovie(it)
+                        })
+//                    if (status) {
+//                        Log.d("DetailMovie", "Status: $status" )
+//                        viewModel.getSelectedMovieDetailLocal().observe(this, Observer { local ->
+//                            favoriteEntity = local
+//                            setDetailMovie(
+//                                DetailMovieEntity(
+//                                    local.movieId,
+//                                    local.title,
+//                                    local.releaseDate,
+//                                    local.runtime,
+//                                    local.rating,
+//                                    local.genres,
+//                                    local.overview,
+//                                    local.posterPath,
+//                                    local.backdropPath
+//                                )
+//                            )
+//                        })
+//                    } else {
+//                        Log.d("DetailMovie", "Status: $status" )
+//                        viewModel.getSelectedMovieDetail()
+//                            .observe(this, Observer {
+//                                movieEntity = it
+//                                setDetailMovie(it)
+//                            })
+//                    }
+                })
             }
 
+        }
+
+        btn_fav.setOnClickListener {
+            favoriteEntity.let {
+                it.movieId = movieEntity?.movieId
+                it.title = movieEntity?.title
+                it.releaseDate = movieEntity?.releaseDate
+                it.runtime = movieEntity?.runtime
+                it.rating = movieEntity?.rating
+                it.genres = movieEntity?.category
+                it.overview = movieEntity?.overview
+                it.posterPath = movieEntity?.posterPath
+                it.backdropPath = movieEntity?.backdropPath
+                it.type = type
+            }
+
+            if (btn_fav.isChecked) {
+                viewModel.addFavorite(favoriteEntity)
+                Toast.makeText(this, "Added Favorite", Toast.LENGTH_SHORT).show()
+            } else {
+                viewModel.deleteFavorite(movieId, type)
+                Toast.makeText(this, "Delete Favorite", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

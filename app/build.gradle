@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 def API_KEY = '"' + apiKey + '"' ?: '"Api key not found"'
 def BASE_URL = '"' + baseUrl + '"' ?: '"Base URL not found"'
@@ -68,6 +69,12 @@ dependencies {
     //navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    //room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    implementation 'com.facebook.stetho:stetho:1.5.1'
 
     //testing
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

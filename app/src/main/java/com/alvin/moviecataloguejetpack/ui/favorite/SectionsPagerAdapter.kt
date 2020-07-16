@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.alvin.moviecataloguejetpack.R
 import com.alvin.moviecataloguejetpack.ui.favorite.movie.FavoriteMovieFragment
+import com.alvin.moviecataloguejetpack.ui.favorite.tvshow.FavoriteTvShowFragment
 import com.alvin.moviecataloguejetpack.ui.movie.MovieFragment
 import com.alvin.moviecataloguejetpack.ui.tvshow.TvShowFragment
 
@@ -21,7 +22,7 @@ class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     override fun getItem(position: Int): Fragment =
         when (position) {
             0 -> FavoriteMovieFragment()
-            1 -> FavoriteMovieFragment()
+            1 -> FavoriteTvShowFragment()
             else -> Fragment()
         }
 

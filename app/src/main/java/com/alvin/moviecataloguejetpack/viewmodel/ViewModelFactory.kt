@@ -1,10 +1,13 @@
 package com.alvin.moviecataloguejetpack.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.alvin.moviecataloguejetpack.data.source.MovieRepository
 import com.alvin.moviecataloguejetpack.di.Injection
 import com.alvin.moviecataloguejetpack.ui.detail.DetailMovieViewModel
+import com.alvin.moviecataloguejetpack.ui.favorite.movie.FavoriteMovieViewModel
+import com.alvin.moviecataloguejetpack.ui.favorite.tvshow.FavoriteTvShowViewModel
 import com.alvin.moviecataloguejetpack.ui.movie.MovieViewModel
 import com.alvin.moviecataloguejetpack.ui.tvshow.TvShowViewModel
 
@@ -15,9 +18,9 @@ class ViewModelFactory private constructor(private val movieRepository: MovieRep
         @Volatile
         private var instance: ViewModelFactory? = null
 
-        fun getInstance(): ViewModelFactory =
+        fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository())
+                instance ?: ViewModelFactory(Injection.provideRepository(context))
             }
     }
 
@@ -32,6 +35,12 @@ class ViewModelFactory private constructor(private val movieRepository: MovieRep
             }
             modelClass.isAssignableFrom(DetailMovieViewModel::class.java) -> {
                 return DetailMovieViewModel(movieRepository) as T
+            }
+            modelClass.isAssignableFrom(FavoriteMovieViewModel::class.java) -> {
+                return FavoriteMovieViewModel(movieRepository) as T
+            }
+            modelClass.isAssignableFrom(FavoriteTvShowViewModel::class.java) -> {
+                return FavoriteTvShowViewModel(movieRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

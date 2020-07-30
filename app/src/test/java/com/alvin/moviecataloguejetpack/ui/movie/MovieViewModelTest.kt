@@ -1,11 +1,14 @@
 package com.alvin.moviecataloguejetpack.ui.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.alvin.moviecataloguejetpack.data.source.MovieRepository
-import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity
+import com.alvin.moviecataloguejetpack.data.source.remote.response.Movie
 import com.alvin.moviecataloguejetpack.utils.DataDummy
+import com.alvin.moviecataloguejetpack.utils.PagedListUtil
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -29,7 +32,10 @@ class MovieViewModelTest {
     private lateinit var movieRepository: MovieRepository
 
     @Mock
-    private lateinit var observer: Observer<List<MovieEntity>>
+    private lateinit var observer: Observer<PagedList<Movie>>
+
+    @Mock
+    private lateinit var pagedList: PagedList<Movie>
 
     @Before
     fun setup() {
@@ -38,13 +44,13 @@ class MovieViewModelTest {
 
     @Test
     fun getMovies() {
-        val dummyMovies = DataDummy.generateDummyMovies(1)
-        val response = MutableLiveData<List<MovieEntity>>()
+        val dummyMovies = pagedList
+        val response = MutableLiveData<PagedList<Movie>>()
         response.value = dummyMovies
 
-        `when`(movieRepository.getMovies(1)).thenReturn(response)
+        `when`(movieRepository.getMovies()).thenReturn(response as LiveData<PagedList<Movie>>)
         val movieEntities = viewModel.data.value
-        verify(movieRepository).getMovies(1)
+        verify(movieRepository).getMovies()
         assertNotNull(movieEntities)
         assertEquals(dummyMovies.size, movieEntities?.size)
 

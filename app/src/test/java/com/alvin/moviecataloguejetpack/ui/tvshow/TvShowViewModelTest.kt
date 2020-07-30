@@ -3,9 +3,13 @@ package com.alvin.moviecataloguejetpack.ui.tvshow
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.alvin.moviecataloguejetpack.data.source.MovieRepository
 import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity
+import com.alvin.moviecataloguejetpack.data.source.remote.response.Movie
+import com.alvin.moviecataloguejetpack.data.source.remote.response.TvShow
 import com.alvin.moviecataloguejetpack.utils.DataDummy
+import com.alvin.moviecataloguejetpack.utils.PagedListUtil
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -28,7 +32,10 @@ class TvShowViewModelTest {
     private lateinit var movieRepository: MovieRepository
 
     @Mock
-    private lateinit var observer: Observer<List<MovieEntity>>
+    private lateinit var observer: Observer<PagedList<TvShow>>
+
+    @Mock
+    private lateinit var pagedList: PagedList<TvShow>
 
     @Before
     fun setup() {
@@ -37,13 +44,13 @@ class TvShowViewModelTest {
 
     @Test
     fun getTvShows() {
-        val dummyTvShows = DataDummy.generateDummyTvShows(1)
-        val response = MutableLiveData<List<MovieEntity>>()
+        val dummyTvShows = pagedList
+        val response = MutableLiveData<PagedList<TvShow>>()
         response.value = dummyTvShows
 
-        Mockito.`when`(movieRepository.getTvShows(1)).thenReturn(response)
+        Mockito.`when`(movieRepository.getTvShows()).thenReturn(response)
         val tvShowEntities = viewModel.data.value
-        Mockito.verify(movieRepository).getTvShows(1)
+        Mockito.verify(movieRepository).getTvShows()
 
         assertNotNull(tvShowEntities)
         assertEquals(dummyTvShows.size, tvShowEntities?.size)

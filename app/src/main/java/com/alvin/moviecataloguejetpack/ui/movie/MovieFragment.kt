@@ -40,8 +40,7 @@ class MovieFragment : Fragment() {
 
             viewModel.data.observe(viewLifecycleOwner, Observer { movies ->
                 progress_bar.visibility = View.GONE
-                adapter.setMovies(movies, 1)
-                adapter.notifyDataSetChanged()
+                adapter.submitList(movies)
             })
 
             with(rv_movies) {

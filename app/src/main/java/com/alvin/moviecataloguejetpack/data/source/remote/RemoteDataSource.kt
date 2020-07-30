@@ -1,6 +1,11 @@
 package com.alvin.moviecataloguejetpack.data.source.remote
 
+import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.alvin.moviecataloguejetpack.BuildConfig
+import com.alvin.moviecataloguejetpack.data.source.paging.MovieDataSourceFactory
+import com.alvin.moviecataloguejetpack.data.source.paging.TvShowDataSourceFactory
 import com.alvin.moviecataloguejetpack.data.source.remote.network.RetrofitServer
 import com.alvin.moviecataloguejetpack.data.source.remote.response.*
 import com.alvin.moviecataloguejetpack.utils.EspressoIdlingResource
@@ -20,43 +25,61 @@ class RemoteDataSource {
             }
     }
 
-    fun getMovies(page:Int, callback: LoadMoviesCallback) {
-        EspressoIdlingResource.increment()
-        RetrofitServer.getService().getMovies(BuildConfig.TMDB_API_KEY, page)
-            .enqueue(object : Callback<MoviesResponse> {
-                override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
+    private val movieDataSourceFactory = MovieDataSourceFactory()
+    private val tvDataSourceFactory = TvShowDataSourceFactory()
 
-                }
+//    fun getMovies(page:Int, callback: LoadMoviesCallback) {
+//        EspressoIdlingResource.increment()
+//        RetrofitServer.getService().getMovies(BuildConfig.TMDB_API_KEY, page)
+//            .enqueue(object : Callback<MoviesResponse> {
+//                override fun onFailure(call: Call<MoviesResponse>, t: Throwable) {
+//
+//                }
+//
+//                override fun onResponse(
+//                    call: Call<MoviesResponse>,
+//                    response: Response<MoviesResponse>
+//                ) {
+//                    response.body()?.results?.let { callback.onAllMoviesReceived(it) }
+//                    EspressoIdlingResource.decrement()
+//                }
+//
+//            })
+//
+//    }
 
-                override fun onResponse(
-                    call: Call<MoviesResponse>,
-                    response: Response<MoviesResponse>
-                ) {
-                    response.body()?.results?.let { callback.onAllMoviesReceived(it) }
-                    EspressoIdlingResource.decrement()
-                }
+    private val config = PagedList.Config.Builder()
+        .setEnablePlaceholders(false)
+        .setInitialLoadSizeHint(10)
+        .setPageSize(10)
+        .build()
 
-            })
+    fun getMovies(): LiveData<PagedList<Movie>> {
+        return LivePagedListBuilder(movieDataSourceFactory, config).build()
     }
 
-    fun getTvShows(page: Int, callback: LoadTvShowsCallback) {
-        EspressoIdlingResource.increment()
-        RetrofitServer.getService().getTvShows(BuildConfig.TMDB_API_KEY, page)
-            .enqueue(object : Callback<TvShowsResponse> {
-                override fun onFailure(call: Call<TvShowsResponse>, t: Throwable) {
-
-                }
-
-                override fun onResponse(
-                    call: Call<TvShowsResponse>,
-                    response: Response<TvShowsResponse>
-                ) {
-                    response.body()?.results?.let { callback.onAllTvShowsReceived(it) }
-                    EspressoIdlingResource.decrement()
-                }
-
-            })
+    fun getTvShows(): LiveData<PagedList<TvShow>>{
+        return LivePagedListBuilder(tvDataSourceFactory, config).build()
     }
+
+//    fun getTvShows(page: Int, callback: LoadTvShowsCallback) {
+//        EspressoIdlingResource.increment()
+//        RetrofitServer.getService().getTvShows(BuildConfig.TMDB_API_KEY, page)
+//            .enqueue(object : Callback<TvShowsResponse> {
+//                override fun onFailure(call: Call<TvShowsResponse>, t: Throwable) {
+//
+//                }
+//
+//                override fun onResponse(
+//                    call: Call<TvShowsResponse>,
+//                    response: Response<TvShowsResponse>
+//                ) {
+//                    response.body()?.results?.let { callback.onAllTvShowsReceived(it) }
+//                    EspressoIdlingResource.decrement()
+//                }
+//
+//            })
+//    }
 
     fun getDetailMovie(movieId: Int,callback: LoadDetailMovieCallback) {
         EspressoIdlingResource.increment()
@@ -96,14 +119,6 @@ class RemoteDataSource {
 
             })
 
-    }
-
-    interface LoadMoviesCallback {
-        fun onAllMoviesReceived(movieResponses: List<Movie>)
-    }
-
-    interface LoadTvShowsCallback {
-        fun onAllTvShowsReceived(tvShowResponses: List<TvShow>)
     }
 
     interface LoadDetailMovieCallback {

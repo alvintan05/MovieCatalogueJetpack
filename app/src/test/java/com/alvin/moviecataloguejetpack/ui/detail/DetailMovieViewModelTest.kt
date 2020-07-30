@@ -46,7 +46,9 @@ class DetailMovieViewModelTest {
         movieViewModel = DetailMovieViewModel(movieRepository)
         tvShowViewModel = DetailMovieViewModel(movieRepository)
         movieViewModel.setSelectedMovie(movieId)
+        movieViewModel.setType(1)
         tvShowViewModel.setSelectedMovie(tvId)
+        tvShowViewModel.setType(2)
     }
 
     @Test
@@ -55,7 +57,7 @@ class DetailMovieViewModelTest {
         movie.value = dummyMovie
 
         `when`(movieRepository.getDetailMovie(movieId)).thenReturn(movie)
-        movieViewModel.getSelectedMovieDetail(1)
+        movieViewModel.getSelectedMovieDetail()
         val movieEntity = movieViewModel.dataMovie.value as DetailMovieEntity
 
         verify(movieRepository).getDetailMovie(movieId)
@@ -81,7 +83,7 @@ class DetailMovieViewModelTest {
         tvShow.value = dummyTvShow
 
         `when`(movieRepository.getDetailTvShow(tvId)).thenReturn(tvShow)
-        tvShowViewModel.getSelectedMovieDetail(2)
+        tvShowViewModel.getSelectedMovieDetail()
         val tvShowEntity = tvShowViewModel.dataTvSHow.value as DetailMovieEntity
 
         assertNotNull(tvShowEntity)

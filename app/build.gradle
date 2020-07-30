@@ -76,6 +76,9 @@ dependencies {
 
     implementation 'com.facebook.stetho:stetho:1.5.1'
 
+    //pagination
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
+
     //testing
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation "junit:junit:$junitVersion"

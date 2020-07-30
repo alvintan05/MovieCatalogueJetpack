@@ -5,8 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.alvin.moviecataloguejetpack.data.source.local.entity.FavoriteEntity
-import com.alvin.moviecataloguejetpack.data.source.local.entity.MovieEntity
-import com.alvin.moviecataloguejetpack.data.source.local.entity.TvShowEntity
 
 @Database(
     entities = [FavoriteEntity::class],

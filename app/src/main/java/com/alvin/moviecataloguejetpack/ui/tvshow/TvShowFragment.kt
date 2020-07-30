@@ -38,15 +38,14 @@ class TvShowFragment : Fragment() {
                 factory
             )[TvShowViewModel::class.java]
 
-            val adapter = MovieAdapter()
+            val adapter = TvShowAdapter()
 
             progress_bar.visibility = View.VISIBLE
 
             viewModel.data.observe(viewLifecycleOwner, Observer { shows ->
                 if (shows != null) {
                     progress_bar.visibility = View.GONE
-                    adapter.setMovies(shows, 2)
-                    adapter.notifyDataSetChanged()
+                    adapter.submitList(shows)
                 }
             })
 

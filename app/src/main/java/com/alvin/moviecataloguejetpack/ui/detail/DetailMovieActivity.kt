@@ -1,7 +1,6 @@
 package com.alvin.moviecataloguejetpack.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.alvin.moviecataloguejetpack.R
 import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
 import com.alvin.moviecataloguejetpack.data.source.local.entity.FavoriteEntity
+import com.alvin.moviecataloguejetpack.databinding.ActivityDetailMovieBinding
 import com.alvin.moviecataloguejetpack.utils.Url
 import com.alvin.moviecataloguejetpack.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
@@ -24,6 +24,7 @@ class DetailMovieActivity : AppCompatActivity() {
         const val EXTRA_TYPE = "extra_type"
     }
 
+    private lateinit var binding: ActivityDetailMovieBinding
     private var movieEntity: DetailMovieEntity? = null
     private var type = 1
     private var movieId = 1
@@ -31,12 +32,13 @@ class DetailMovieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_movie)
+        binding = ActivityDetailMovieBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setSupportActionBar(toolbar_detail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        with(collapse_toolbar_detail) {
+        with(binding.collapseToolbarDetail) {
             setExpandedTitleColor(ContextCompat.getColor(context, android.R.color.transparent))
         }
 
@@ -46,7 +48,7 @@ class DetailMovieActivity : AppCompatActivity() {
             factory
         )[DetailMovieViewModel::class.java]
 
-        progress_bar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
 
         val extras = intent.extras
         if (extras != null) {
@@ -57,44 +59,18 @@ class DetailMovieActivity : AppCompatActivity() {
                 viewModel.setType(type)
 
                 viewModel.isFavorite.observe(this, Observer { status ->
-                    btn_fav.isChecked = status
+                    binding.btnFav.isChecked = status
                     viewModel.getSelectedMovieDetail()
                         .observe(this, Observer {
                             movieEntity = it
                             setDetailMovie(it)
                         })
-//                    if (status) {
-//                        Log.d("DetailMovie", "Status: $status" )
-//                        viewModel.getSelectedMovieDetailLocal().observe(this, Observer { local ->
-//                            favoriteEntity = local
-//                            setDetailMovie(
-//                                DetailMovieEntity(
-//                                    local.movieId,
-//                                    local.title,
-//                                    local.releaseDate,
-//                                    local.runtime,
-//                                    local.rating,
-//                                    local.genres,
-//                                    local.overview,
-//                                    local.posterPath,
-//                                    local.backdropPath
-//                                )
-//                            )
-//                        })
-//                    } else {
-//                        Log.d("DetailMovie", "Status: $status" )
-//                        viewModel.getSelectedMovieDetail()
-//                            .observe(this, Observer {
-//                                movieEntity = it
-//                                setDetailMovie(it)
-//                            })
-//                    }
                 })
             }
 
         }
 
-        btn_fav.setOnClickListener {
+        binding.btnFav.setOnClickListener {
             favoriteEntity.let {
                 it.movieId = movieEntity?.movieId
                 it.title = movieEntity?.title
@@ -108,7 +84,7 @@ class DetailMovieActivity : AppCompatActivity() {
                 it.type = type
             }
 
-            if (btn_fav.isChecked) {
+            if (binding.btnFav.isChecked) {
                 viewModel.addFavorite(favoriteEntity)
                 Toast.makeText(this, "Added Favorite", Toast.LENGTH_SHORT).show()
             } else {
@@ -119,14 +95,14 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun setDetailMovie(movie: DetailMovieEntity) {
-        progress_bar.visibility = View.GONE
-        collapse_toolbar_detail.title = movie.title
-        tv_detail_title.text = movie.title
-        tv_detail_date.text = resources.getString(R.string.release_time, movie.releaseDate)
-        tv_detail_length.text = resources.getString(R.string.length, movie.runtime.toString())
-        tv_detail_category.text = movie.category
-        tv_detail_synopsis.text = movie.overview
-        tv_detail_rating.text = movie.rating.toString()
+        binding.progressBar.visibility = View.GONE
+        binding.collapseToolbarDetail.title = movie.title
+        binding.tvDetailTitle.text = movie.title
+        binding.tvDetailDate.text = resources.getString(R.string.release_time, movie.releaseDate)
+        binding.tvDetailLength.text = resources.getString(R.string.length, movie.runtime.toString())
+        binding.tvDetailCategory.text = movie.category
+        binding.tvDetailSynopsis.text = movie.overview
+        binding.tvDetailRating.text = movie.rating.toString()
 
         Glide.with(this)
             .load(movie.posterPath?.let { Url.getUrlPoster(it) })
@@ -134,7 +110,7 @@ class DetailMovieActivity : AppCompatActivity() {
                 RequestOptions.placeholderOf(R.color.colorTextSecondary)
                     .error(R.color.colorTextSecondary)
             )
-            .into(img_detail_poster)
+            .into(binding.imgDetailPoster)
 
         Glide.with(this)
             .load(movie.backdropPath?.let { Url.getUrlBackdrop(it) })
@@ -142,7 +118,7 @@ class DetailMovieActivity : AppCompatActivity() {
                 RequestOptions.placeholderOf(R.color.colorTextSecondary)
                     .error(R.color.colorTextSecondary)
             )
-            .into(img_detail_backdrop)
+            .into(binding.imgDetailBackdrop)
     }
 
     override fun onSupportNavigateUp(): Boolean {

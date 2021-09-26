@@ -1,7 +1,7 @@
 package com.alvin.moviecataloguejetpack.di
 
 import android.content.Context
-import com.alvin.moviecataloguejetpack.data.source.MovieRepository
+import com.alvin.moviecataloguejetpack.data.MovieRepository
 import com.alvin.moviecataloguejetpack.data.source.local.LocalDataSource
 import com.alvin.moviecataloguejetpack.data.source.local.room.MovieDatabase
 import com.alvin.moviecataloguejetpack.data.source.remote.RemoteDataSource

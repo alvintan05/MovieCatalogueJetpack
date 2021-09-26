@@ -1,11 +1,11 @@
-package com.alvin.moviecataloguejetpack.data.source
+package com.alvin.moviecataloguejetpack.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
+import com.alvin.moviecataloguejetpack.data.source.MovieDataSource
 import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
 import com.alvin.moviecataloguejetpack.data.source.local.LocalDataSource
-import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity
 import com.alvin.moviecataloguejetpack.data.source.local.entity.FavoriteEntity
 import com.alvin.moviecataloguejetpack.data.source.remote.RemoteDataSource
 import com.alvin.moviecataloguejetpack.data.source.remote.response.DetailMovieResponse

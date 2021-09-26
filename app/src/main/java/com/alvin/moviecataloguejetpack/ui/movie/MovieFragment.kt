@@ -9,20 +9,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alvin.moviecataloguejetpack.R
+import com.alvin.moviecataloguejetpack.databinding.FragmentMovieBinding
 import com.alvin.moviecataloguejetpack.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_movie.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class MovieFragment : Fragment() {
+
+    private var _binding: FragmentMovieBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie, container, false)
+        _binding = FragmentMovieBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -36,20 +37,25 @@ class MovieFragment : Fragment() {
             )[MovieViewModel::class.java]
 
             val adapter = MovieAdapter()
-            progress_bar.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
 
             viewModel.data.observe(viewLifecycleOwner, Observer { movies ->
-                progress_bar.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
                 adapter.submitList(movies)
             })
 
-            with(rv_movies) {
+            with(binding.rvMovies) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
                 this.adapter = adapter
             }
 
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

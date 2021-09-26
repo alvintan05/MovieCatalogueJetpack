@@ -5,10 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.alvin.moviecataloguejetpack.data.source.MovieRepository
+import com.alvin.moviecataloguejetpack.data.MovieRepository
 import com.alvin.moviecataloguejetpack.data.source.remote.response.Movie
-import com.alvin.moviecataloguejetpack.utils.DataDummy
-import com.alvin.moviecataloguejetpack.utils.PagedListUtil
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before

@@ -3,7 +3,7 @@ package com.alvin.moviecataloguejetpack.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.alvin.moviecataloguejetpack.data.source.MovieRepository
+import com.alvin.moviecataloguejetpack.data.MovieRepository
 import com.alvin.moviecataloguejetpack.di.Injection
 import com.alvin.moviecataloguejetpack.ui.detail.DetailMovieViewModel
 import com.alvin.moviecataloguejetpack.ui.favorite.movie.FavoriteMovieViewModel

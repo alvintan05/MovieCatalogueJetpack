@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.alvin.moviecataloguejetpack.R
+import com.alvin.moviecataloguejetpack.databinding.FragmentFavoriteBinding
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
 /**
@@ -14,12 +15,15 @@ import kotlinx.android.synthetic.main.fragment_favorite.*
  */
 class FavoriteFragment : Fragment() {
 
+    private var _binding: FragmentFavoriteBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
+        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -34,9 +38,14 @@ class FavoriteFragment : Fragment() {
                         childFragmentManager
                     )
                 }
-            view_pager_home.adapter = sectionsPagerAdapter
-            tabs_home.setupWithViewPager(view_pager_home)
+            binding.viewPagerHome.adapter = sectionsPagerAdapter
+            binding.tabsHome.setupWithViewPager(view_pager_home)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

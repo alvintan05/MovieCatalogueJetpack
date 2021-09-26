@@ -3,7 +3,7 @@ package com.alvin.moviecataloguejetpack.ui.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.alvin.moviecataloguejetpack.data.source.MovieRepository
+import com.alvin.moviecataloguejetpack.data.MovieRepository
 import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
 import com.alvin.moviecataloguejetpack.utils.DataDummy
 import com.nhaarman.mockitokotlin2.verify

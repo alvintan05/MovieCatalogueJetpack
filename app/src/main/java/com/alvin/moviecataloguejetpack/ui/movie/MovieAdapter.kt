@@ -2,26 +2,25 @@ package com.alvin.moviecataloguejetpack.ui.movie
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.alvin.moviecataloguejetpack.R
-import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity
 import com.alvin.moviecataloguejetpack.data.source.remote.response.Movie
+import com.alvin.moviecataloguejetpack.databinding.ItemMovieBinding
 import com.alvin.moviecataloguejetpack.ui.detail.DetailMovieActivity
 import com.alvin.moviecataloguejetpack.utils.Url
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_movie.view.*
 
-class MovieAdapter internal constructor() : PagedListAdapter<Movie, MovieAdapter.ViewHolder>(DIFF_CALLBACK) {
+class MovieAdapter internal constructor() :
+    PagedListAdapter<Movie, MovieAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
             override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem.id == newItem.id
             }
+
             override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem == newItem
             }
@@ -29,7 +28,7 @@ class MovieAdapter internal constructor() : PagedListAdapter<Movie, MovieAdapter
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
+        val view = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
     }
 
@@ -40,18 +39,19 @@ class MovieAdapter internal constructor() : PagedListAdapter<Movie, MovieAdapter
         }
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(private val binding: ItemMovieBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             with(itemView) {
-                tv_item_title.text = movie.title
-                tv_item_rating.text = movie.voteAverage.toString()
-                tv_item_desc.text = movie.overview
+                binding.tvItemTitle.text = movie.title
+                binding.tvItemRating.text = movie.voteAverage.toString()
+                binding.tvItemDesc.text = movie.overview
 
                 Glide.with(itemView.context)
                     .load(movie.posterPath?.let { Url.getUrlPoster(it) })
-                    .into(img_item_poster)
+                    .into(binding.imgItemPoster)
 
-                ticket_view.setOnClickListener {
+                binding.ticketView.setOnClickListener {
                     val intent = Intent(context, DetailMovieActivity::class.java).apply {
                         putExtra(DetailMovieActivity.EXTRA_ID, movie.id)
                         putExtra(DetailMovieActivity.EXTRA_TYPE, 1)

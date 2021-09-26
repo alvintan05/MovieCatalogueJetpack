@@ -7,21 +7,24 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.alvin.moviecataloguejetpack.R
+import com.alvin.moviecataloguejetpack.databinding.ActivityHomeBinding
 import com.facebook.stetho.Stetho
-import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Stetho.initializeWithDefaults(this)
 
-        setSupportActionBar(toolbar_home)
+        setSupportActionBar(binding.toolbarHome)
 
         val navController = findNavController(R.id.fragment)
-        bottom_nav_home.setupWithNavController(navController)
+        binding.bottomNavHome.setupWithNavController(navController)
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(

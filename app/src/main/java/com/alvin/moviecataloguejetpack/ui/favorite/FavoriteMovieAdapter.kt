@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.alvin.moviecataloguejetpack.R
 import com.alvin.moviecataloguejetpack.data.source.local.entity.FavoriteEntity
+import com.alvin.moviecataloguejetpack.databinding.ItemMovieBinding
 import com.alvin.moviecataloguejetpack.ui.detail.DetailMovieActivity
 import com.alvin.moviecataloguejetpack.utils.Url
 import com.bumptech.glide.Glide
@@ -25,7 +26,7 @@ class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolde
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
+        val view = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
     }
 
@@ -36,18 +37,18 @@ class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolde
         holder.bind(movie)
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: FavoriteEntity) {
             with(itemView) {
-                tv_item_title.text = movie.title
-                tv_item_rating.text = movie.rating.toString()
-                tv_item_desc.text = movie.overview
+                binding.tvItemTitle.text = movie.title
+                binding.tvItemRating.text = movie.rating.toString()
+                binding.tvItemDesc.text = movie.overview
 
                 Glide.with(itemView.context)
                     .load(movie.posterPath?.let { Url.getUrlPoster(it) })
-                    .into(img_item_poster)
+                    .into(binding.imgItemPoster)
 
-                ticket_view.setOnClickListener {
+                binding.ticketView.setOnClickListener {
                     val intent = Intent(context, DetailMovieActivity::class.java).apply {
                         putExtra(DetailMovieActivity.EXTRA_ID, movie.movieId)
                         putExtra(DetailMovieActivity.EXTRA_TYPE, movieType)

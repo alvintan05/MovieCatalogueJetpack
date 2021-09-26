@@ -2,7 +2,7 @@ package com.alvin.moviecataloguejetpack.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.alvin.moviecataloguejetpack.data.source.MovieRepository
+import com.alvin.moviecataloguejetpack.data.MovieRepository
 import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
 import com.alvin.moviecataloguejetpack.data.source.local.entity.FavoriteEntity
 

@@ -84,7 +84,7 @@ class DetailMovieViewModelTest {
 
         `when`(movieRepository.getDetailTvShow(tvId)).thenReturn(tvShow)
         tvShowViewModel.getSelectedMovieDetail()
-        val tvShowEntity = tvShowViewModel.dataTvSHow.value as DetailMovieEntity
+        val tvShowEntity = tvShowViewModel.dataTvShow.value as DetailMovieEntity
 
         assertNotNull(tvShowEntity)
         assertEquals(dummyTvShow.movieId, tvShowEntity.movieId)
@@ -97,7 +97,7 @@ class DetailMovieViewModelTest {
         assertEquals(dummyTvShow.rating!!, tvShowEntity.rating!!, 0.0001)
         assertEquals(dummyTvShow.title, tvShowEntity.title)
 
-        tvShowViewModel.dataTvSHow.observeForever(tvShowObserver)
+        tvShowViewModel.dataTvShow.observeForever(tvShowObserver)
         verify(tvShowObserver).onChanged(dummyTvShow)
     }
 }

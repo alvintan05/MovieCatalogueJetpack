@@ -3,20 +3,20 @@ package com.alvin.moviecataloguejetpack.data.source
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.alvin.moviecataloguejetpack.data.source.local.DetailMovieEntity
-import com.alvin.moviecataloguejetpack.data.source.local.MovieEntity
 import com.alvin.moviecataloguejetpack.data.source.local.entity.FavoriteEntity
 import com.alvin.moviecataloguejetpack.data.source.remote.response.Movie
 import com.alvin.moviecataloguejetpack.data.source.remote.response.TvShow
+import com.alvin.moviecataloguejetpack.vo.Resource
 
 interface MovieDataSource {
 
-    fun getMovies(): LiveData<PagedList<Movie>>
+    suspend fun getMovies(): LiveData<PagedList<Movie>>
 
-    fun getTvShows(): LiveData<PagedList<TvShow>>
+    suspend fun getTvShows(): LiveData<PagedList<TvShow>>
 
-    fun getDetailMovie(movieId: Int): LiveData<DetailMovieEntity>
+    suspend fun getDetailMovie(movieId: Int): DetailMovieEntity
 
-    fun getDetailTvShow(tvId: Int): LiveData<DetailMovieEntity>
+    suspend fun getDetailTvShow(tvId: Int): DetailMovieEntity
 
     fun getFavMovie(): LiveData<List<FavoriteEntity>>
 

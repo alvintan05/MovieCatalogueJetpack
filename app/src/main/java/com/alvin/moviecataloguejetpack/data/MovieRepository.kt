@@ -34,60 +34,16 @@ class MovieRepository private constructor(
             }
     }
 
-    override fun getMovies(): LiveData<PagedList<Movie>> {
+    override suspend fun getMovies(): LiveData<PagedList<Movie>> {
         return remoteDataSource.getMovies()
     }
 
-    override fun getTvShows(): LiveData<PagedList<TvShow>> {
+    override suspend fun getTvShows(): LiveData<PagedList<TvShow>> {
         return remoteDataSource.getTvShows()
     }
 
-//    override fun getMovies(page: Int): LiveData<List<MovieEntity>> {
-//        val movieResults = MutableLiveData<List<MovieEntity>>()
-//        remoteDataSource.getMovies(page, object : RemoteDataSource.LoadMoviesCallback {
-//            override fun onAllMoviesReceived(movieResponses: List<Movie>) {
-//                val movieList = ArrayList<MovieEntity>()
-//                for (response in movieResponses) {
-//                    val movie = MovieEntity(
-//                        response.id,
-//                        response.title,
-//                        response.voteAverage,
-//                        response.overview,
-//                        response.posterPath
-//                    )
-//                    movieList.add(movie)
-//                }
-//                movieResults.postValue(movieList)
-//            }
-//        })
-//
-//        return movieResults
-//    }
-//
-//    override fun getTvShows(page: Int): LiveData<List<MovieEntity>> {
-//        val tvShowResults = MutableLiveData<List<MovieEntity>>()
-//        remoteDataSource.getTvShows(page, object : RemoteDataSource.LoadTvShowsCallback {
-//            override fun onAllTvShowsReceived(tvShowResponses: List<TvShow>) {
-//                val tvShowList = ArrayList<MovieEntity>()
-//                for (response in tvShowResponses) {
-//                    val tvShow = MovieEntity(
-//                        response.id,
-//                        response.name,
-//                        response.voteAverage,
-//                        response.overview,
-//                        response.posterPath
-//                    )
-//                    tvShowList.add(tvShow)
-//                }
-//                tvShowResults.postValue(tvShowList)
-//            }
-//        })
-//
-//        return tvShowResults
-//    }
-
-    override fun getDetailMovie(movieId: Int): LiveData<DetailMovieEntity> {
-        val detailResult = MutableLiveData<DetailMovieEntity>()
+    override suspend fun getDetailMovie(movieId: Int): DetailMovieEntity {
+        var detailResult = DetailMovieEntity()
 
         remoteDataSource.getDetailMovie(movieId,
             object : RemoteDataSource.LoadDetailMovieCallback {
@@ -106,7 +62,7 @@ class MovieRepository private constructor(
                         detailMovie.backdropPath
                     )
 
-                    detailResult.postValue(movie)
+                    detailResult = movie
                 }
 
             })
@@ -114,8 +70,8 @@ class MovieRepository private constructor(
         return detailResult
     }
 
-    override fun getDetailTvShow(tvId: Int): LiveData<DetailMovieEntity> {
-        val detailResult = MutableLiveData<DetailMovieEntity>()
+    override suspend fun getDetailTvShow(tvId: Int): DetailMovieEntity {
+        var detailResult = DetailMovieEntity()
 
         remoteDataSource.getDetailTvShow(tvId,
             object : RemoteDataSource.LoadDetailTvShowCallback {
@@ -134,7 +90,7 @@ class MovieRepository private constructor(
                         detailTvShow.backdropPath
                     )
 
-                    detailResult.postValue(tvShow)
+                    detailResult = tvShow
                 }
 
             })
